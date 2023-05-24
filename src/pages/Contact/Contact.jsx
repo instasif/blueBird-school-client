@@ -1,23 +1,53 @@
-import map from "../../assets/photos/map1.png"
-// 
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+
 const Contact = () => {
-    return (
-      <section className="mx-5">
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
-              <img
-                alt="map"
-                src={map}
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </div>
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-            <div className="lg:py-24">
-              <h2 className="text-3xl font-bold sm:text-4xl">
-                Contact with <span className="text-blue-500">Us</span>
-              </h2>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const number = form.number.value;
+    const message = form.message.value;
 
+    const studentMessage = {
+      name,
+      email,
+      number,
+      message,
+    };
+
+    fetch("http://localhost:5000/message", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(studentMessage),
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if (data.acknowledged) {
+        form.reset();
+        navigate("/");
+      }
+    })
+  };
+
+  return (
+    <section className="bg-gray-100">
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
+          <div className="lg:col-span-2 lg:py-12">
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
+              Contact with <span className="text-blue-500">Us.</span>
+            </h2>
+
+            <div className="mt-8">
               <div className="flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -83,9 +113,84 @@ const Contact = () => {
               </div>
             </div>
           </div>
+
+          <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="sr-only" htmlFor="name">
+                  Name
+                </label>
+                <input
+                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  placeholder="Name"
+                  name="name"
+                  defaultValue={user?.displayName}
+                  required
+                  type="text"
+                  id="name"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="sr-only" htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                    placeholder="Email address"
+                    name="email"
+                    required
+                    defaultValue={user?.email}
+                    type="email"
+                    id="email"
+                  />
+                </div>
+
+                <div>
+                  <label className="sr-only" htmlFor="phone">
+                    Phone
+                  </label>
+                  <input
+                    className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                    placeholder="Phone Number"
+                    name="number"
+                    required
+                    type="tel"
+                    id="phone"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="sr-only" htmlFor="message">
+                  Message
+                </label>
+
+                <textarea
+                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  placeholder="Message"
+                  name="message"
+                  required
+                  rows="8"
+                  id="message"
+                ></textarea>
+              </div>
+
+              <div className="mt-4">
+                <button
+                  type="submit"
+                  className="inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-yellow-400"
+                >
+                  Send Enquiry
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </section>
-    );
+      </div>
+    </section>
+  );
 };
 
 export default Contact;

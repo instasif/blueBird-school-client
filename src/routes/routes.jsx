@@ -15,6 +15,7 @@ import AddTeacher from "../pages/Dashboard/AddTeacher/AddTeacher";
 import ManageTeachers from "../pages/Dashboard/ManageTeachers/ManageTeachers";
 import Contact from "../pages/Contact/Contact";
 import PrivateRoutes from './PrivateRoutes';
+import StudentsMsg from "../pages/Dashboard/StudentsMessage/StudentsMsg";
 
 export const router = createBrowserRouter([
   {
@@ -96,6 +97,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageTeachers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/students-message",
+        element: (
+          <AdminRoute>
+            <StudentsMsg />
           </AdminRoute>
         ),
       },

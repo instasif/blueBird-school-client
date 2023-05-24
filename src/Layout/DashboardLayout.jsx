@@ -39,7 +39,14 @@ const DashboardLayout = () => {
                     <Link to={"/dashboard/add-teachers"}>Add a Teacher</Link>
                   </li>
                   <li>
-                    <Link to={"/dashboard/manage-teachers"}>Manage Teachers</Link>
+                    <Link to={"/dashboard/manage-teachers"}>
+                      Manage Teachers
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={"/dashboard/students-message"}>
+                      Students Message
+                    </Link>
                   </li>
                 </>
               )}

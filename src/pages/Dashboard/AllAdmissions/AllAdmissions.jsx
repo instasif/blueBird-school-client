@@ -1,7 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import { AuthContext } from "../../../Context/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const AllAdmissions = () => {
-  const { data: admissions = [] } = useQuery({
+  const {user} = useContext(AuthContext);
+  const { data: admissions = [], refetch } = useQuery({
     queryKey: ["admission"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/admission");
@@ -9,6 +13,19 @@ const AllAdmissions = () => {
       return data;
     },
   });
+
+  const handleMakeApprove = (id) => {
+    fetch(`http://localhost:5000/admission/${id}?email=${user?.email}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.matchedCount > 0) {
+          toast.success("Successfully approved this student");
+          refetch();
+        }
+      });
+  };
   return (
     <div>
       <h2 className="text-3xl">All Admissions</h2>
@@ -23,6 +40,7 @@ const AllAdmissions = () => {
               <th>Email</th>
               <th>Number</th>
               <th>Section</th>
+              <th>Make Approve</th>
             </tr>
           </thead>
           <tbody>
@@ -34,6 +52,16 @@ const AllAdmissions = () => {
                 <td>{admission?.email}</td>
                 <td>{admission?.number}</td>
                 <td>{admission?.section}</td>
+                {admission?.status !== "approved" && (
+                  <td>
+                    <button
+                      className="btn btn-xs btn-primary text-white"
+                      onClick={() => handleMakeApprove(admission?._id)}
+                    >
+                      Make Approve
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

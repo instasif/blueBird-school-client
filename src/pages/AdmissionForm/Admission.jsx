@@ -3,9 +3,11 @@ import { AuthContext } from "../../Context/AuthProvider";
 import admission from "../../assets/photos/admission.jpeg";
 import logo from "../../assets/photos/slogo.jpeg";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Admission = () => {
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleAdmission = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -21,7 +23,7 @@ const Admission = () => {
       number,
       section,
     };
-    
+
     fetch("http://localhost:5000/admission", {
       method: "POST",
       headers: {
@@ -34,6 +36,7 @@ const Admission = () => {
         if (data.acknowledged) {
           toast.success("We will confirm you by email, Thank You!");
           form.reset();
+          navigate("/");
         }
       });
   };
@@ -94,6 +97,7 @@ const Admission = () => {
                   type="text"
                   id="name"
                   name="name"
+                  required
                   defaultValue={user?.displayName}
                   className="mt-1 w-full input-bordered rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
@@ -110,6 +114,7 @@ const Admission = () => {
                 <input
                   type="number"
                   id="class"
+                  required
                   name="admissionClass"
                   className="mt-1 w-full input-bordered rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
@@ -127,6 +132,7 @@ const Admission = () => {
                   type="email"
                   id="Email"
                   name="email"
+                  required
                   defaultValue={user?.email}
                   className="mt-1 w-full input-bordered rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
@@ -143,6 +149,7 @@ const Admission = () => {
                 <input
                   type="tel"
                   id="phone"
+                  required
                   name="number"
                   className="mt-1 w-full input-bordered rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
