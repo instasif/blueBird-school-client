@@ -55,7 +55,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/calender", //
-        element: <Calender />,
+        element: (
+          <PrivateRoutes>
+            <Calender />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/result",

@@ -20,13 +20,13 @@ const Navbar = () => {
         <Link to={"/about"}>About</Link>
       </li>
       <li>
+        <Link to={"/teachers"}>Teacher & stuffs</Link>
+      </li>
+      <li>
         <Link to={"/result"}>Result</Link>
       </li>
       <li>
         <Link to={"/admission"}>Admission</Link>
-      </li>
-      <li>
-        <Link to={"/teachers"}>Teacher & stuffs</Link>
       </li>
       <li>
         <Link to={"/routine"}>Routine</Link>

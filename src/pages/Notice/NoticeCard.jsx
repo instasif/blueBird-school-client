@@ -3,7 +3,7 @@
 const NoticeCard = ({ notice, isAdmin, handleDelete }) => {
   const { date, day, notice: text, _id } = notice;
   return (
-    <article className="rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg sm:p-6 mb-[100%]">
+    <article className="rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg sm:p-6">
       <div className="flex justify-between">
         <span className="inline-block rounded bg-blue-600 p-2 text-white">
           <svg
