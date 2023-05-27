@@ -16,6 +16,12 @@ import ManageTeachers from "../pages/Dashboard/ManageTeachers/ManageTeachers";
 import Contact from "../pages/Contact/Contact";
 import PrivateRoutes from './PrivateRoutes';
 import StudentsMsg from "../pages/Dashboard/StudentsMessage/StudentsMsg";
+import Result from "../pages/Result/Result";
+import StudentResult from "../pages/Dashboard/StudentsResult/StudentResult";
+import Notice from "../pages/Notice/Notice";
+import StudentsNotice from "../pages/Dashboard/StudentsNotice/StudentsNotice";
+import Calender from "../pages/Calender/Calender";
+import Routine from "../pages/Routine/Routine";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +45,22 @@ export const router = createBrowserRouter([
         element: <Signup />,
       },
       {
+        path: "/routine",
+        element: <Routine />,
+      },
+      {
+        path: "/calender", //
+        element: <Calender />,
+      },
+      {
+        path: "/result",
+        element: (
+          <PrivateRoutes>
+            <Result />
+          </PrivateRoutes>
+        ),
+      },
+      {
         path: "/admission",
         element: (
           <PrivateRoutes>
@@ -53,6 +75,10 @@ export const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/notice",
+        element: <Notice />,
       },
     ],
   },
@@ -105,6 +131,22 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <StudentsMsg />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/students-results",
+        element: (
+          <AdminRoute>
+            <StudentResult />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/students-notice",
+        element: (
+          <AdminRoute>
+            <StudentsNotice />
           </AdminRoute>
         ),
       },

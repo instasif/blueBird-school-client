@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/photos/slogo.jpeg";
 import { useContext } from "react";
-import { AuthContext } from "../../Context/AuthProvider";
 import { useAdmin } from "../../Hooks/useAdmin";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isAdmin] = useAdmin(user?.email);
-
   const handleLouout = () => {
     logOut().then(() => {});
   };
@@ -21,10 +20,22 @@ const Navbar = () => {
         <Link to={"/about"}>About</Link>
       </li>
       <li>
+        <Link to={"/result"}>Result</Link>
+      </li>
+      <li>
         <Link to={"/admission"}>Admission</Link>
       </li>
       <li>
         <Link to={"/teachers"}>Teacher & stuffs</Link>
+      </li>
+      <li>
+        <Link to={"/routine"}>Routine</Link>
+      </li>
+      <li>
+        <Link to={"/calender"}>Calender</Link>
+      </li>
+      <li>
+        <Link to={"/notice"}>Notice</Link>
       </li>
       <li>
         <Link to={"/contact"}>Contact</Link>

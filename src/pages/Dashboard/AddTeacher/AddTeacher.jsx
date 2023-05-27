@@ -83,7 +83,7 @@ const AddTeacher = () => {
                 type="text"
                 name="possion"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                placeholder="Enter his/her possion"
+                placeholder="Enter his/her possion & subject"
               />
             </div>
           </div>
