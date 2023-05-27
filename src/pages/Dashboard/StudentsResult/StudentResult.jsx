@@ -120,7 +120,7 @@ const StudentResult = () => {
 
           <div>
             <label htmlFor="marks" className="sr-only">
-              Marks
+              Total Marks
             </label>
 
             <div className="relative">
@@ -128,7 +128,7 @@ const StudentResult = () => {
                 type="text"
                 name="marks"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                placeholder="Enter marks"
+                placeholder="Enter total marks"
               />
             </div>
           </div>
