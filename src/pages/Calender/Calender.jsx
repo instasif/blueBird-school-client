@@ -1,87 +1,109 @@
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
-import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
-import { useContext, useReducer, useState } from "react";
+import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import { useContext, useReducer } from "react";
 import { AuthContext } from "../../Context/AuthProvider";
 import { useAdmin } from "../../Hooks/useAdmin";
 import EventModal from "./EventModal";
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const Calender = () => {
   const { user } = useContext(AuthContext);
   const [isAdmin] = useAdmin(user?.email);
 
-  const [events, setEvents] = useState([])
+  // const [events, setEvents] = useState([]);
 
-  const [newEvent, setNewEvent] = useReducer((state, payload)=>({
+  const [newEvent, setNewEvent] = useReducer(
+    (state, payload) => ({
       ...state,
-      ...payload
-  }), {
-    openModal: false,
-    startDate: new Date()
-  })
+      ...payload,
+    }),
+    {
+      openModal: false,
+      startDate: new Date(),
+    }
+  );
 
-
-  function handleCreateEventModal(data){ 
-    if(!data){
+  function handleCreateEventModal(data) {
+    if (!data) {
       setNewEvent({
         modalOpen: false,
         startDate: new Date(),
-      })
+      });
       return;
     }
-    setNewEvent({
-      modalOpen: true,
-      startDate: data.date,
-    
-    })
+
+    if (isAdmin) {
+      setNewEvent({
+        modalOpen: true,
+        startDate: data.date,
+      });
+    }
   }
 
-  useEffect(()=>{
+  // useEffect(() => {
+  //   //fetch all event from server
+  //   setEvents([
+  //     { title: "event", date: new Date() },
+  //     { title: "event", date: new Date() },
+  //     { title: "event", date: new Date() },
+  //   ]);
+  // }, []);
 
-    //fetch all event from server 
-    setEvents([
-      { title: 'event', date: new Date()},
-      { title: 'event', date: new Date()},
-      { title: 'event', date: new Date()},
-    ])
-
-  }, [])
+  const { data: events = [], refetch } = useQuery({
+    queryKey: ["calender"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/calender");
+      const data = await res.json();
+      return data;
+    },
+  });
 
   const onEventAdd = (event) => {
-    
+    // send date to server to create events
+    // setEvents((prev) => [...prev, event]);
+    // console.log(event);
 
-    // send date to server to create events 
-    setEvents((prev)=>([...prev, event]))
-    console.log(event);
+    const data = {
+      title: event.title,
+      start: event.start,
+      end: event.end,
+    };
 
+    fetch(`http://localhost:5000/calender?email=${user?.email}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          refetch();
+        }
+      });
   };
 
-  function updateHandler(event){
+  // function updateHandler(event){
 
-  }
-
+  // }
 
   return (
     <section className="mx-5">
-      {isAdmin && (
-        <button
-          className="btn btn-secondary rounded-full text-white"
-          onClick={() => setModalOpen(true)}
-        >
-          Add Event
-        </button>
-      )}
-      <div style={{
-        posision: "relative", zIndex: 0
-      }}>
-
+      <div
+        style={{
+          posision: "relative",
+          zIndex: 0,
+        }}
+      >
         <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin ]}
+          plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
-          events={events}
+          events={events} // datas
           dateClick={handleCreateEventModal}
-          eventClick={updateHandler}
+          // eventClick={updateHandler}
         />
       </div>
 

@@ -23,7 +23,7 @@ const Table = ({result}) => {
                 Section
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Total Marks
+                Total
               </th>
             </tr>
           </thead>
