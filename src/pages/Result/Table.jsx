@@ -17,7 +17,7 @@ const Table = ({result}) => {
                 Class
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Role
+                Roll
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Section
