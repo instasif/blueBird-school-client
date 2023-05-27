@@ -41,6 +41,7 @@ const Result = () => {
               <input
                 type="text"
                 name="term"
+                required
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter Exam Term"
               />
@@ -56,6 +57,7 @@ const Result = () => {
               <input
                 type="text"
                 name="name"
+                required
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter Name"
               />
@@ -71,6 +73,7 @@ const Result = () => {
               <input
                 type="text"
                 name="class"
+                required
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter Class"
               />
@@ -86,6 +89,7 @@ const Result = () => {
               <input
                 type="text"
                 name="roll"
+                required
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter Roll"
               />
@@ -109,7 +113,7 @@ const Result = () => {
           results.map((result, index) => <Table key={index} result={result} />)
         } */}
 
-        <Table result={marks}/>
+        <Table result={marks} />
       </div>
     </div>
   );
