@@ -1,36 +1,30 @@
-// import { useEffect, useState } from "react";
-
-
-
-// const Routine = () => {
-//     const [routines, setRoutines] = useState();
-
-//     useEffect(() => {
-//       fetch("http://localhost:5000/routine")
-//         .then((res) => res.json())
-//         .then((data) => setRoutines(data));
-//     }, []);
-//     console.log(routines);
-//     return (
-//       <div>
-//         {/* {routines.map((r) => (
-//           <button  key={r._id}>{r?.class}</button>
-//         ))} */}
-//         {routines.map(r => <button className="btn btn-accent" key={r._id}>{r?.class}</button>)}
-//       </div>
-//     );
-// };
-
-// export default Routine;
-
-
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const Routine = () => {
-    return (
-        <div>
-            comming soon.....
-        </div>
-    );
+
+    const {data: routines = []} = useQuery({
+        queryKey: ["routine"],
+        queryFn: async() =>{
+            const res = await fetch("http://localhost:5000/routine");
+            const data = await res.json();
+            return data;
+        }
+    })
+console.log(routines);
+  return (
+    <div className="mx-10">
+      {routines.map((r) => (
+        <Link
+          to={`/routine/${r._id}`}
+          className="btn btn-info ms-1 text-slate-700 rounded" 
+          key={r._id}
+        >
+          {r.class}
+        </Link>
+      ))}
+    </div>
+  );
 };
 
 export default Routine;

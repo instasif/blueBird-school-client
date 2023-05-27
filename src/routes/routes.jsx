@@ -22,6 +22,7 @@ import Notice from "../pages/Notice/Notice";
 import StudentsNotice from "../pages/Dashboard/StudentsNotice/StudentsNotice";
 import Calender from "../pages/Calender/Calender";
 import Routine from "../pages/Routine/Routine";
+import RoutineImg from "../pages/Routine/RoutineImg";
 
 export const router = createBrowserRouter([
   {
@@ -46,7 +47,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/routine",
-        element: <Routine />,
+        element: (
+          <PrivateRoutes>
+            <Routine />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/calender", //
@@ -57,6 +62,16 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <Result />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/routine/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/routine/${params.id}`),
+        element: (
+          <PrivateRoutes>
+            <RoutineImg />
           </PrivateRoutes>
         ),
       },
@@ -78,7 +93,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/notice",
-        element: <Notice />,
+        element: (
+          <PrivateRoutes>
+            <Notice />
+          </PrivateRoutes>
+        ),
       },
     ],
   },
